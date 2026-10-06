@@ -78,7 +78,7 @@ class DatabaseManager:
 
             raise DatabaseError(
                 f"Database insertion failed: {error}"
-            )
+            ) from error
 
         finally:
 

@@ -5,31 +5,36 @@ Custom exceptions used throughout the project.
 """
 
 
-class DatasetNotFoundError(Exception):
-    """Raised when a dataset file cannot be found."""
+class AssignmentError(Exception):
+    """Base class for all project-specific exceptions."""
     pass
 
 
-class EmptyDatasetError(Exception):
-    """Raised when a dataset contains no rows."""
+class DatasetNotFoundError(AssignmentError):
+    """Raised when a required dataset file cannot be found."""
     pass
 
 
-class InvalidDatasetError(Exception):
-    """Raised when a dataset has an invalid structure."""
+class EmptyDatasetError(AssignmentError):
+    """Raised when a dataset is empty."""
     pass
 
 
-class DatabaseError(Exception):
+class InvalidDatasetError(AssignmentError):
+    """Raised when a dataset has an invalid structure or format."""
+    pass
+
+
+class DatabaseError(AssignmentError):
     """Raised when a database operation fails."""
     pass
 
 
-class MappingError(Exception):
-    """Raised when test data mapping fails."""
+class MappingError(AssignmentError):
+    """Raised when test-data mapping fails."""
     pass
 
 
-class VisualizationError(Exception):
+class VisualizationError(AssignmentError):
     """Raised when visualization generation fails."""
     pass

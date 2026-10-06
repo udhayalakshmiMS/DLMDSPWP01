@@ -38,8 +38,8 @@ class DatasetLoader:
                 If the dataset contains no rows.
 
             InvalidDatasetError:
-                If the dataset does not contain the required
-                x column and at least one y column.
+                If the file cannot be parsed, or does not contain
+                the required x column and at least one y column.
         """
 
         path = Path(filepath)
@@ -49,8 +49,18 @@ class DatasetLoader:
                 f"Dataset not found: {filepath}"
             )
 
-        dataframe = pd.read_csv(path)
+        try:
+            dataframe = pd.read_csv(path)
+        except (
+            pd.errors.ParserError,
+            pd.errors.EmptyDataError,
+            UnicodeDecodeError,
+        ) as error:
+            raise InvalidDatasetError(
+                f"Dataset '{filepath}' could not be parsed: {error}"
+            ) from error
 
+        # Dataset must contain at least one row
         if dataframe.empty:
             raise EmptyDatasetError(
                 f"Dataset '{filepath}' is empty."

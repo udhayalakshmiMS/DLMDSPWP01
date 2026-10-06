@@ -3,6 +3,7 @@ from src.database import DatabaseManager
 from src.matcher import FunctionMatcher
 from src.mapper import TestDataMapper
 from src.visualizer import Visualizer
+from src.exceptions import AssignmentError
 
 
 def main():
@@ -59,7 +60,14 @@ def main():
     )
 
     print("Project completed successfully!")
-
+    
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except AssignmentError as error:
+        print(f"Error: {error}")
+        raise SystemExit(1)
+    except OSError as error:
+        print(f"File system error: {error}")
+        raise SystemExit(1)
