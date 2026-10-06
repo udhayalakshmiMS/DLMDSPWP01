@@ -36,9 +36,10 @@ class DatabaseManager:
 
     def create_tables(self):
         """
-        Create all database tables.
+        Drop and recreate all tables so every run starts clean.
         """
 
+        Base.metadata.drop_all(self.engine)
         Base.metadata.create_all(self.engine)
 
     def get_session(self):
